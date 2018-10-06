@@ -1,0 +1,56 @@
+// Off-canvas panels settings.
+$offcanvas-left-width: 300px !default;
+$offcanvas-right-width: 300px !default;
+$offcanvas-transition-duration: 0.25s !default;
+$offcanvas-transition-function: ease !default;
+
+// Helper to include off-canvas styles.
+@mixin offcanvas() {
+  .js-offcanvas-main {
+    left: 0;
+    @include single-transition(left, $offcanvas-transition-duration, $offcanvas-transition-function);
+
+    &.js-offcanvas-main-left,
+    &.js-offcanvas-main-right {
+      @include single-transition(left, $offcanvas-transition-duration, $offcanvas-transition-function);
+      // Show overlay if one of the off-canvas containers is visible.
+      .js-offcanvas-overlay {
+        display: block;
+      }
+    }
+    &.js-offcanvas-main-left {
+      left: $offcanvas-left-width;
+    }
+    &.js-offcanvas-main-right {
+      left: -1 * $offcanvas-right-width;
+    }
+  }
+
+  .js-offcanvas-left {
+    width: $offcanvas-left-width;
+    left: 0;
+  }
+
+  .js-offcanvas-right {
+    width: $offcanvas-right-width;
+    right: 0;
+  }
+
+  // Overlay is added by JS and is used to prevent body from being scrolled
+  // or clicked.
+  .js-offcanvas-overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+    background: rgba($black, 0.2);
+  }
+
+  // Prevent page from being scrolled when overlay is shown.
+  .js-offcanvas-noscroll {
+    overflow: hidden;
+  }
+}
+
+@include offcanvas();
